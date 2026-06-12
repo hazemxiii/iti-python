@@ -1,0 +1,101 @@
+{% extends 'app-layout.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-5">
+
+                    <h1 class="display-5 fw-bold mb-4">
+                        {% if book %}Update Book{% else %}Add Book{% endif %}
+                    </h1>
+
+                    {% if book %}
+                    <form action="/books/update/{{ book.isbn }}" method="post">
+                    {% else %}
+                    <form action="/books/add/" method="post">
+                    {% endif %}
+
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="title" class="form-label">
+                                Title
+                            </label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="title"
+                                id="title"
+                                value="{{ book.title }}"
+                            >
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="author" class="form-label">
+                                Author
+                            </label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="author"
+                                id="author"
+                                value="{{ book.author }}"
+                            >
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="price" class="form-label">
+                                Price
+                            </label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="price"
+                                id="price"
+                                value="{{ book.price }}"
+                            >
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="isbn" class="form-label">
+                                ISBN
+                            </label>
+
+                            <input
+                                class="form-control"
+                                name="isbn"
+                                id="isbn"
+                                {% if book %}
+                                    value="{{ book.isbn }}"
+                                {% endif %}
+                            >
+                        </div>
+
+                        <button type="submit" class="btn btn-dark">
+                            {% if book %}
+                                Update Book
+                            {% else %}
+                                Add Book
+                            {% endif %}
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
